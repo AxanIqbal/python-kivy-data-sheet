@@ -1,0 +1,117 @@
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+WindowManager:
+    transition: FadeTransition()
+    LogIn:
+    LoadingScreen:
+    DataSheet:
+
+
+<LogIn>:
+    name: "login"
+	canvas:
+		Rectangle:
+			source: 'test2.jpg'
+        	size: root.width, root.height
+
+	TextInput:
+    	id: login_username
+    	center_x: (root.width/2) 
+    	top: (root.top/2)+ 100
+    	size_hint: None,None
+    	hint_text: "username"
+        background_color: [0.0,0.0,0.0,0.4]
+        foreground_color: (0.3, 0.4, 0.5, 1)
+        size: 250, 35
+        max_lines: 1
+        valign: 'middle'
+        halign: 'center'
+        font_size: 15
+        multiline: False
+        on_text_validate: root.validate();
+
+    TextInput:
+    	id: login_password
+    	center_x: (root.width/2) 
+    	top: (root.top/2)+ 50
+    	size_hint: None,None
+    	hint_text: "password"
+    	background_color: [0.0,0.0,0.0,0.4]
+    	foreground_color: (0.3, 0.4, 0.5, 1)
+    	size: 250, 35
+    	max_lines: 1
+    	valign: 'middle'
+    	halign: 'center'
+    	font_size: 15
+    	multiline: False
+    	password: True
+
+    CheckBox:
+        id: rempass
+        size_hint: None,None
+        size: 200, 10
+        center_x: (root.width/2)+60
+        top: (root.top/2)+50
+        pos: ((root.width/2), (root.top/2))
+
+    Label:
+        text: "Save Password"
+        size_hint: None,None
+        center_x: (root.width/2)-5
+        top: (root.top/2)+50
+
+    Button:
+    	size_hint: None,None
+    	center_x: (root.width/2)-50
+    	top: (root.top/2)-15
+    	size: 90,35
+    	pos: 350, 200
+    	font_size: 18
+    	background_color: (1,1,1,0.1)
+    	text: "Forgot"
+        on_release: root.log_in()
+
+    Button:
+    	size_hint: None,None
+    	center_x: (root.width/2)+50
+    	top: (root.top/2)-15
+    	size: 90,35
+    	pos: 350, 200
+    	font_size: 18
+    	background_color: (1,1,1,0.1)
+    	text: "Login"
+    	on_release: root.test()
+
+    Label:
+        text: "Powered By Ahsan Iqbal"
+        pos_hint:{'bottom':1,'center_y': 0.1}
+
+<LoadingScreen>:
+    name: "loading"
+
+    Label:
+        text: "Loged in"
+
+<DataSheet>:
+    name: "datasheet"
+
+    BoxLayout:
+        id: bl
+        orientation: 'vertical'
+        padding: 10, 10
+        row_default_height: '48dp'
+        row_force_default: True
+        spacing: 10, 10
+        ScrollView:
+            size: self.size
+            GridLayout:
+                id: layout_content
+                size_hint_y: None
+                cols: 1
+                row_default_height: '20dp'
+                row_force_default: True
+                spacing: 0, 0
+                padding: 0, 0
+
+                Label:
+                    text: "Lorem ipsum dolor sit amet"
