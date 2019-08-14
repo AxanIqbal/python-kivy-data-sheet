@@ -1,98 +1,54 @@
-import time
-from os.path import join
-
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.storage.jsonstore import JsonStore
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import Screen, NoTransition
+
+from kivymd.theming import ThemeManager
+from kivy.core.window import Window
+from kivy.metrics import dp
+from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.image import Image
+from kivymd.ripplebehavior import CircularRippleBehavior
+from kivymd.utils.cropimage import crop_image
+
+url = "https://project-001-af863.firebaseio.com/"
+
+
+class Test(Screen):
+    def asd(self, a, s):
+        print(f"a = {a} b = {s} root = {self.width}")
+
+    pass
 
 
 class LogIn(Screen):
-    def __init__(self, **kw):
+    def test(self):
+        print("at login")
 
-        super().__init__(**kw)
-        print(self.ids)
-        for key, val in self.ids.items():
-            print("key={0}, val={1}".format(key, val))
-        self.username = ''
-        self.password = ''
+    pass
 
-    def log_in(self):
-        self.username = self.ids.login_username.text
-        self.password = self.ids.login_password.text
 
-        data_dir = App().user_data_dir
-        store = JsonStore(join(data_dir, 'storage.json'))
-        try:
-            store.get('credentials')['username']
-        except KeyError:
-            self.username = ""
-        else:
-            self.ids.login_username.text = store.get('credentials')['username']
+class MainFrame(Screen):
+    pass
 
-        try:
-            store.get('credentials')['password']
-        except KeyError:
-            self.password = ""
-        else:
-            self.ids.login_password.text = store.get('credentials')['password']
+
+gui = Builder.load_file("main.kv")
+
+
+class MyApp(App):
+    theme_cls = ThemeManager()
+
+    def build(self):
+        self.title = "Project 001"
+        return gui
+
+    def change_screen(self, screen_name):
+        screen_manager = self.root.ids['screen_manager']
+        screen_manager.transition = NoTransition()
+        screen_manager.current = screen_name
 
     def test(self):
-        AppScreen.store.put('credentials', username=self.username, password=self.password)
-
-
-class LoadingScreen(Screen):
-    pass
-
-
-class WindowManager(ScreenManager):
-    pass
-
-
-app = Builder.load_file("main.kv")
-
-
-# class LogIn(FloatLayout):
-#     data_dir = App().user_data_dir
-#     store = JsonStore(join(data_dir, 'storage.json'))
-#
-#     def loading_screen(self):
-#         self.parent.current = 'LoadingScreen'
-#
-#     def test(self):
-#         print("pressed")
-#
-#     pass
-
-
-# class LoadingScreen(FloatLayout):
-#     def __init__(self):
-#         print("on loading")
-#
-#     def show_popup(self):
-#         print("on loading")
-#         self.pop_up = Factory.PopupBox()
-#         self.pop_up.update_pop_up_text('Running some task...')
-#         self.pop_up.open()
-
-
-class AppScreen(ScreenManager):
-    data_dir = App().user_data_dir
-    store = JsonStore(join(data_dir, 'storage.json'))
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def login(self):
-        username = self.login_username.text
-        password = self.login_password.text
-        AppScreen.store.put('credentials', username=username, password=password)
-
-
-class MainApp(App):
-    def build(self):
-        return app
+        print("at myapp")
 
 
 if __name__ == "__main__":
-    MainApp().run()
+    MyApp().run()

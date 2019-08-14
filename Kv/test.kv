@@ -1,0 +1,23 @@
+#:import NavigationLayout kivymd.navigationdrawer.NavigationLayout
+#:import MDSeparator kivymd.cards.MDSeparator
+#:import images_path kivymd.images_path
+#:import MDFillRoundFlatButton kivymd.button.MDFillRoundFlatButton
+#:import MDLabel kivymd.label.MDLabel
+#:import MDTextFieldRound kivymd.textfields.MDTextFieldRound
+
+
+<Test>:
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: None, None
+        size: self.size
+        spacing: dp(10)
+        center_x: (root.width/2)
+        top: (root.top/2)+100
+        
+        valign: 'middle'
+        halign: 'center'
+
+        Button:
+            text: 'this on top'
+            on_release: root.asd(root.top,root.width)
