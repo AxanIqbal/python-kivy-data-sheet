@@ -81,6 +81,7 @@
             root.sign_in(login_username.text,login_password.text)
             Animation(opacity=0, duration=0.5).start(message)
             root.display_loading_screen()
+            login_password.text = ""
 
 
     MDLabel:

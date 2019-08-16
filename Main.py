@@ -46,6 +46,9 @@ class LogIn(Screen, EventDispatcher):
         """Overwrite this method to switch to your app's home screen.
         """
         print("Logged in successfully", args)
+        screen_manager = self.parent
+        screen_manager.transition = NoTransition()
+        screen_manager.current = "MainFrame"
 
     def on_web_api_key(self, *args):
         """When the web api key is set, look for an existing account in local
@@ -200,7 +203,11 @@ class LogIn(Screen, EventDispatcher):
         file exists.
         """
 
+        print(self.parent.parent)
+
         if not self.ids['rempass'].active:
+            if self.debug:
+                print("Save Password is Unchecked Going Back")
             return
 
         if self.debug:
