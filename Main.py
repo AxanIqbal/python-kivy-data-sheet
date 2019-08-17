@@ -1,16 +1,16 @@
 import os.path
 from json import dumps
-
+from os.path import join
 from kivy.app import App
 from kivy.event import EventDispatcher
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.network.urlrequest import UrlRequest
 from kivy.properties import BooleanProperty, StringProperty
-from kivy.uix.checkbox import CheckBox
 from kivy.uix.screenmanager import Screen, NoTransition
 import progressspinner
 from kivymd.theming import ThemeManager
+from kivy.storage.jsonstore import JsonStore
 
 url = "https://project-001-af863.firebaseio.com/"
 folder = os.path.dirname(os.path.realpath(__file__))
@@ -42,10 +42,30 @@ class LogIn(Screen, EventDispatcher):
     popup = Factory.LoadingPopup()
     popup.background = folder + "/Image/transparent_image.png"
 
+    data_dir = App().user_data_dir
+    store = JsonStore(join(data_dir, 'storage.json'))
+
+    check_box = False
+
+    def on_pre_enter(self, *args):
+        try:
+            self.store.get('credentials')['remember_password']
+        except KeyError:
+            if self.debug:
+                print("Key Error Store")
+            self.check_box = False
+        else:
+            self.check_box = self.store.get('credentials')['remember_password']
+
     def on_login_success(self, *args):
         """Overwrite this method to switch to your app's home screen.
         """
         print("Logged in successfully", args)
+        if self.ids['rempass'].active:
+            print("activated")
+        self.check_box = self.ids['rempass'].active
+        self.store.put('credentials', remember_password=self.check_box)
+        print(self.store.get('credentials'))
         screen_manager = self.parent
         screen_manager.transition = NoTransition()
         screen_manager.current = "MainFrame"
@@ -205,7 +225,7 @@ class LogIn(Screen, EventDispatcher):
 
         print(self.parent.parent)
 
-        if not self.ids['rempass'].active:
+        if not self.check_box:
             if self.debug:
                 print("Save Password is Unchecked Going Back")
             return

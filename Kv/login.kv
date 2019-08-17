@@ -1,4 +1,7 @@
 #:import MDLabel kivymd.label.MDLabel
+#:import utils kivy.utils
+#:import Animation kivy.animation.Animation
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
 
 <ThemedMessage@Label>:
     bg_color: (0,0,0,1) #app.login_primary_color[:3] + [.7] if type(app.login_primary_color) != tuple else app.login_primary_color[:3] + tuple([.7])
@@ -21,10 +24,22 @@
     name: "login"
     web_api_key: "AIzaSyDYcE9v683M5UFY24_KiCmN95CtoEMzsXk"
     tertiary_color: 1, 0, 0, 1
+
+    canvas.before:
+        Color:
+            rgb: .6, .6, .6 
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "Image/transparent_image.png"
+
 	canvas:
 		Rectangle:
 			source: 'Image/test2.jpg'
         	size: root.width, root.height
+
+    on_sign_in_msg:
+        error_msg.text = root.sign_in_msg
 
     BoxLayout:
         orientation: 'vertical'
@@ -65,6 +80,12 @@
         size: 10, 10
         top: (root.top/2)+50
         pos: ((root.width/2) + 50, (root.top/2))
+        canvas.before:
+            Color:
+                rgb: utils.get_color_from_hex('#475164')
+            Rectangle:
+                pos:self.center_x-7, self.center_y-7
+                size:[14,14]
 
     MDLabel:
         text: "Save Password"
@@ -73,6 +94,7 @@
         color: 1, 1, 1, 1
 
     MDFillRoundFlatButton:
+        id: login
     	font_size: 18
     	background_color: (1,1,1,0.1)
     	text: "Login"
@@ -83,9 +105,19 @@
             root.display_loading_screen()
             login_password.text = ""
 
+    MDLabel:
+        id: error_msg
+        text: ""
+        halign: 'center'
+        pos_hint: {"center_x": .5, "center_y": .3}
+        color: utils.get_color_from_hex('#ff0000')
+        bold: True
+        font_size: 20 
+
 
     MDLabel:
         text: "Powered By Ahsan Iqbal"
+        color: 1, 1, 1, 1
         halign: 'center'
         size_hint_y: None
 
