@@ -5,33 +5,83 @@
 #:import MDLabel kivymd.label.MDLabel
 #:import MDTextFieldRound kivymd.textfields.MDTextFieldRound
 #:import MDToolbar kivymd.toolbar.MDToolbar
+#:import MDRaisedButton kivymd.button.MDRaisedButton
+#:import Window kivy.core.window.Window
+#:import MDStackFloatingButtons kivymd.stackfloatingbuttons
+#:include Kv/Setting.kv
+#:include Kv/Main.kv
+
+<Theming@NavigationDrawerIconButton>
+    name: 'theming'
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: dp(80)
+        center_y: self.parent.center_y
+
+        MDRaisedButton:
+            size_hint: None, None
+            size: 3 * dp(48), dp(48)
+            center_x: self.parent.center_x
+            text: 'Change theme'
+            on_release: root.theme_picker_open()
+            opposite_colors: True
+            pos_hint: {'center_x': .5}
+        MDLabel:
+            text:
+                "Current: " + app.theme_cls.theme_style\
+                + ", " + app.theme_cls.primary_palette
+            theme_text_color: 'Primary'
+            pos_hint: {'center_x': .5}
+            halign: 'center'
+
+<MyNavigationDrawerIconButton@NavigationDrawerIconButton>
+    icon: 'checkbox-blank-circle'
+    on_release:
+        app.root.ids['screen_manager'].screens[1].show_screen(root.text)
+        app.set_title_toolbar(root.text)
+
+<ContentNavigationDrawer@MDNavigationDrawer>
+    drawer_logo: "Image\drawer logo.jpeg"
+
+    MyNavigationDrawerIconButton:
+        text: "Main"
+
+    MyNavigationDrawerIconButton:
+        text: "Setting"
+
+    MyNavigationDrawerIconButton:
+        text: "Log Out"
+
 
 <MainFrame>:
-	FloatLayout:
-        canvas:
-            Rectangle:
-                size: self.size
-                pos: self.pos
-                source: 'Image/account-background.jpeg'
+	NavigationLayout:
+		id: nav_main
 
-        MDToolbar:
-        	id: toolbar
-	        title: app.title
-	        md_bg_color: app.theme_cls.primary_color
-	        background_palette: 'Primary'
-	        elevation: 10
-	        right_action_items: [['dots-vertical', lambda x: None]]
-	        left_action_items: [['menu', lambda x: '']]
-	        pos_hint: {'top': 1}
+		ContentNavigationDrawer:
+			id: nav_drawer
 
-		NavigationLayout:
+		FloatLayout:
+			id: float_box
 
-			MDNavigationDrawer:
-				id: nav
-				NavigationDrawerIconButton:
-					text: "Setting"
-					id: Setting
-				NavigationDrawerIconButton:
-					text: "Log Out"
-					id: Log_out
-					on_release: app.change_screen("login")
+			BoxLayout:
+	            id: box_for_manager
+	            orientation: 'vertical'
+
+	        MDToolbar:
+	        	id: toolbar
+		        title: app.title
+		        md_bg_color: app.theme_cls.primary_color
+		        background_palette: 'Primary'
+		        background_palette: 'Primary'
+		        elevation: 10
+		        left_action_items: [['menu', lambda x: nav_main.toggle_nav_drawer()]]
+		        pos_hint: {'top': 1}
+
+		    ScreenManager:
+                id: scr_mngr
+                Main:
+                	id: Main
+                Setting:
+                	id: Setting

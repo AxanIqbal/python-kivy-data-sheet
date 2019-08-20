@@ -77,13 +77,13 @@
     CheckBox:
         id: rempass
         size_hint: None,None
-        size: 10, 10
+        size: 12, 12
         top: (root.top/2)+50
         pos: ((root.width/2) + 50, (root.top/2))
         canvas.before:
             Color:
-                rgb: utils.get_color_from_hex('#475164')
-            Rectangle:
+                rgb: utils.get_color_from_hex('#629abc')
+            Ellipse:
                 pos:self.center_x-7, self.center_y-7
                 size:[14,14]
 

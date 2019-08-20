@@ -1,0 +1,27 @@
+#:import MDRaisedButton kivymd.button.MDRaisedButton
+#:import MDLabel kivymd.label.MDLabel
+
+<Main@Screen>
+    name: 'Main'
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: dp(80)
+        center_y: self.parent.center_y
+
+        MDRaisedButton:
+            size_hint: None, None
+            size: 3 * dp(48), dp(48)
+            center_x: self.parent.center_x
+            text: 'Change theme Main'
+            on_release: app.root.ids['screen_manager'].screens[1].theme_picker_open()
+            opposite_colors: True
+            pos_hint: {'center_x': .5}
+        MDLabel:
+            text:
+                "Current: " + app.theme_cls.theme_style\
+                + ", " + app.theme_cls.primary_palette
+            theme_text_color: 'Primary'
+            pos_hint: {'center_x': .5}
+            halign: 'center'

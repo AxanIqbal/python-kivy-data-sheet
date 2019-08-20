@@ -23,7 +23,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../kitchen_sink" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -120,7 +120,10 @@
       <workItem from="1565934576308" duration="2209000" />
       <workItem from="1565941973619" duration="6004000" />
       <workItem from="1565952046236" duration="3236000" />
-      <workItem from="1566025885717" duration="6894000" />
+      <workItem from="1566025885717" duration="7380000" />
+      <workItem from="1566110299562" duration="6331000" />
+      <workItem from="1566204858830" duration="6140000" />
+      <workItem from="1566300887780" duration="2786000" />
     </task>
     <servers />
   </component>
@@ -142,6 +145,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_001$Main.coverage" NAME="Main Coverage Results" MODIFIED="1565810006349" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python_kivy_datasheet$Main.coverage" NAME="Main Coverage Results" MODIFIED="1566037311088" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python_kivy_datasheet$Main.coverage" NAME="Main Coverage Results" MODIFIED="1566303079000" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

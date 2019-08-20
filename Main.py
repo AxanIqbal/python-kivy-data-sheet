@@ -7,21 +7,17 @@ from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.network.urlrequest import UrlRequest
 from kivy.properties import BooleanProperty, StringProperty
-from kivy.uix.screenmanager import Screen, NoTransition
+from kivy.uix.screenmanager import Screen, NoTransition, ScreenManager
 import progressspinner
+from kivymd.stackfloatingbuttons import MDStackFloatingButtons
 from kivymd.theming import ThemeManager
 from kivy.storage.jsonstore import JsonStore
+
+from kivymd.toast import toast
 
 url = "https://project-001-af863.firebaseio.com/"
 folder = os.path.dirname(os.path.realpath(__file__))
 Builder.load_file(folder + "/Kv/loadingpopup.kv")
-
-
-class Test(Screen):
-    def asd(self, a, s):
-        print(f"a = {a} b = {s} root = {self.width}")
-
-    pass
 
 
 class LogIn(Screen, EventDispatcher):
@@ -68,6 +64,7 @@ class LogIn(Screen, EventDispatcher):
         print(self.store.get('credentials'))
         screen_manager = self.parent
         screen_manager.transition = NoTransition()
+        print(screen_manager.current)
         screen_manager.current = "MainFrame"
 
     def on_web_api_key(self, *args):
@@ -281,7 +278,51 @@ class LogIn(Screen, EventDispatcher):
 
 
 class MainFrame(Screen):
-    pass
+
+    def __init__(self, **kw):
+
+        super().__init__(**kw)
+        self.create_stack_floating_buttons = False
+        self.md_theme_picker = None
+
+    def on_enter(self):
+        from kivymd.stackfloatingbuttons import MDStackFloatingButtons
+
+        def set_my_language(instance_button):
+            toast(instance_button.icon)
+
+        if not self.create_stack_floating_buttons:
+            screen = self.parent.get_screen("MainFrame")
+            screen.add_widget(
+                MDStackFloatingButtons(
+                    icon="lead-pencil",
+                    floating_data={
+                        "Create New Data": "new-box",
+                        "Delete": "delete-circle",
+                        "Edit": "circle-edit-outline",
+                    },
+                    callback=set_my_language,
+                )
+            )
+            self.create_stack_floating_buttons = True
+
+    def show_screen(self, screen_name):
+        if screen_name == "Log Out":
+            screen_manager = self.parent
+            screen_manager.transition = NoTransition()
+            print(screen_manager.current)
+            screen_manager.current = "login"
+            return
+        screen_manager = self.ids['scr_mngr']
+        screen_manager.transition = NoTransition()
+        screen_manager.current = screen_name
+
+    def theme_picker_open(self):
+        if not self.md_theme_picker:
+            from kivymd.pickers import MDThemePicker
+
+            self.md_theme_picker = MDThemePicker()
+        self.md_theme_picker.open()
 
 
 class MyApp(App):
@@ -296,6 +337,9 @@ class MyApp(App):
         screen_manager = self.root.ids['screen_manager']
         screen_manager.transition = NoTransition()
         screen_manager.current = screen_name
+
+    def set_title_toolbar(self, title):
+        self.title = title
 
 
 MyApp().run()
